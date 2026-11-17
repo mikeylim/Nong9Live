@@ -1,0 +1,5 @@
+package com.nong9live.nong9live
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
