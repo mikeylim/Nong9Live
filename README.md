@@ -62,6 +62,32 @@ box scores, careers, leaderboards and records are all derived from those events,
 so **undo** is just deleting an event, and fixing an old game recalculates
 everything.
 
+## Announcer voice (ElevenLabs)
+
+The commentator lines are real-sounding clips generated **once** with
+ElevenLabs and bundled in `assets/voice/`. Playing them costs nothing and works
+offline. Anything without a clip falls back to the phone's text-to-speech.
+
+```bash
+# needs ELEVENLABS_API_KEY=... in .env (git-ignored)
+python3 tool/generate_voice.py --dry-run                     # show cost first
+python3 tool/generate_voice.py --players "Jay Park=J-Splash, Danny Kim"
+python3 tool/generate_voice.py --backup nong9live-backup.json   # whole roster from an app backup
+```
+
+- **Player names:** ~7 lines per player (~200 credits each), e.g. "J-Splash for three!".
+  The app uses a player's own clip about 2 out of 3 times and a generic call otherwise.
+  Names must match the player's full name in the app. The script speaks the nickname,
+  or the first name if there's no nickname.
+- **Re-runs only pay for new or changed lines.** The generic pack (69 clips) cost 1,700 credits.
+- **Changing the voice:** `--voice <voice_id> --force`, then rebuild. On the free plan the API can
+  use only ElevenLabs' built-in voices (default: Adam). Voice Library voices such as
+  "Sam – Engaging Game Narrator" or "David – Sports Arena Announcer" need a paid plan.
+  A custom designed voice needs the *Voice Generation* permission on the API key.
+- Edit the lines in `LINES` / `PLAYER_LINES` inside the script. `[excited]`, `[shouting]`
+  and `[laughs]` are v3 audio tags.
+- Free-plan audio is for non-commercial use. Settings credits ElevenLabs.
+
 ## Customizing
 
 - **Sounds:** edit the recipes in `tool/generate_sounds.py`, then

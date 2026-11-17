@@ -5,6 +5,7 @@ import '../../data/app_store.dart';
 import '../../data/backup_service.dart';
 import '../../data/demo_data.dart';
 import '../../models/game.dart';
+import '../../services/announcer.dart';
 import '../../services/sound_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/common.dart';
@@ -110,7 +111,7 @@ class SettingsScreen extends StatelessWidget {
                   onChanged: (v) {
                     s.announcer = v;
                     save();
-                    if (v) context.read<SoundService>().say('Announcer is in the building!');
+                    if (v) context.read<SoundService>().announce(const Call(['tipoff'], 'Announcer is in the building!'));
                   },
                 ),
                 SwitchListTile(
@@ -294,7 +295,8 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: 24),
           Center(
             child: Text(
-              'Nong9 Live · v1.0\nSounds are synthesized in-app · Barlow font (SIL OFL)',
+              'Nong9 Live · v1.1\nAnnouncer voice generated with ElevenLabs\n'
+              'Sound effects synthesized in-app · Barlow font (SIL OFL)',
               textAlign: TextAlign.center,
               style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12),
             ),

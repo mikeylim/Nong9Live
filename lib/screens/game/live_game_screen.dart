@@ -89,7 +89,7 @@ class _LiveGameScreenState extends State<_LiveGameView> {
         if (g == null) return;
         if (_store.settings.sfx) _sound.play(Sfx.tipoff);
         if (_store.settings.announcer) {
-          Future.delayed(const Duration(milliseconds: 1600), () => _sound.say(_announcer.tipOff(g)));
+          Future.delayed(const Duration(milliseconds: 1600), () => _sound.announce(_announcer.tipOff(g)));
         }
       });
     }
@@ -177,10 +177,10 @@ class _LiveGameScreenState extends State<_LiveGameView> {
       if (sfx != null) _sound.play(sfx);
     }
     if (settings.announcer) {
-      final line = _announcer.lineFor(e, p, _game!.rules);
-      if (line != null) {
-        // Let the effect land first.
-        Future.delayed(Duration(milliseconds: e.airball ? 300 : 650), () => _sound.say(line));
+      final call = _announcer.callFor(e, p, _game!.rules);
+      if (call != null) {
+        // Let the effect land first (the airball's sad trombone gets its moment).
+        Future.delayed(Duration(milliseconds: e.airball ? 1900 : 450), () => _sound.announce(call));
       }
     }
   }
@@ -207,7 +207,7 @@ class _LiveGameScreenState extends State<_LiveGameView> {
       if (canWin && !_gamePointCalled.contains(t)) {
         _gamePointCalled.add(t);
         if (_store.settings.announcer) {
-          Future.delayed(const Duration(milliseconds: 2200), () => _sound.say(_announcer.gamePoint(g.teams[t])));
+          Future.delayed(const Duration(milliseconds: 2200), () => _sound.announce(_announcer.gamePoint(g.teams[t])));
         }
       }
     }
@@ -343,7 +343,7 @@ class _LiveGameScreenState extends State<_LiveGameView> {
       Future.delayed(const Duration(milliseconds: 900), () => _sound.play(Sfx.crowd));
     }
     if (settings.announcer) {
-      Future.delayed(const Duration(milliseconds: 1500), () => _sound.say(_announcer.gameOver(g, scores)));
+      Future.delayed(const Duration(milliseconds: 1500), () => _sound.announce(_announcer.gameOver(g, scores)));
     }
     if (!mounted) return;
     Navigator.pushReplacement(

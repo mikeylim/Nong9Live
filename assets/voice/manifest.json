@@ -1,0 +1,237 @@
+{
+ "cache": {
+  "airball_1.mp3": "069c6a0ae973a790",
+  "airball_2.mp3": "02592370e4d7fe44",
+  "airball_3.mp3": "32c5ce2dc01e3972",
+  "and_one_1.mp3": "25298b1fa2f86802",
+  "ball_dont_lie_1.mp3": "95af4ba65d7be431",
+  "block_1.mp3": "bd978735fe2be31a",
+  "block_2.mp3": "939134c6a0f5732f",
+  "block_3.mp3": "cd0567003a6ad905",
+  "block_4.mp3": "b247d1094839daa7",
+  "brick_1.mp3": "7c5f55429779af4b",
+  "brick_2.mp3": "027f0972eec1019f",
+  "bucket_1.mp3": "fd16be14d53fe9a1",
+  "bucket_2.mp3": "c105caba83bb7530",
+  "bucket_3.mp3": "cd17ed19212a9260",
+  "bucket_4.mp3": "875f71d1c0176c50",
+  "check_ball_1.mp3": "931ac953d60fc613",
+  "deep_1.mp3": "149884361dd2046e",
+  "deep_2.mp3": "dbda9e209f6f9b0b",
+  "defense_1.mp3": "8e88483ad720e826",
+  "foul_1.mp3": "fac8f50d69d0a25d",
+  "foul_2.mp3": "e6ba4e2a8dbd92f1",
+  "ft_1.mp3": "a75e66f24b793aba",
+  "ft_2.mp3": "390c3f8cf0b4cda7",
+  "gameover_1.mp3": "1d5fcf8a09bd6592",
+  "gameover_2.mp3": "3fa58105671aa38a",
+  "gameover_3.mp3": "c8b0cc355eb56b96",
+  "gamepoint_1.mp3": "67f6ab1143326b2e",
+  "gamepoint_2.mp3": "780336cc20a64220",
+  "gamepoint_black_1.mp3": "3e8122b980ffac65",
+  "gamepoint_blue_1.mp3": "a7efca1065a49c0d",
+  "gamepoint_gray_1.mp3": "34ecc592423a46c4",
+  "gamepoint_green_1.mp3": "12eb607b6ca7eb73",
+  "gamepoint_navy_1.mp3": "cb7d9d327fa246a4",
+  "gamepoint_orange_1.mp3": "a352578f3dc6da2f",
+  "gamepoint_purple_1.mp3": "f23144ac1240026b",
+  "gamepoint_red_1.mp3": "cd2a3e470c0e51e3",
+  "gamepoint_white_1.mp3": "0522a6cb2caa13be",
+  "gamepoint_yellow_1.mp3": "13d1c1fde6d8c281",
+  "hype_1.mp3": "f615349988faf65b",
+  "hype_2.mp3": "2f1901c1aef9efd1",
+  "hype_3.mp3": "6258d052c7838cea",
+  "ice_cold_1.mp3": "214d66815159dcbf",
+  "next_1.mp3": "6df7aa2d863b9d31",
+  "run_it_back_1.mp3": "ba1727d89009880a",
+  "steal_1.mp3": "01bf8cbb9677d850",
+  "steal_2.mp3": "65507e4194b83e5a",
+  "three_1.mp3": "cb86c9f65cc8f12f",
+  "three_2.mp3": "841b0be05f7dda05",
+  "three_3.mp3": "40aefa92f37453bf",
+  "three_4.mp3": "639025de2b35a740",
+  "timeout_1.mp3": "7f95d0fbaa18a7b6",
+  "tipoff_1.mp3": "896b9dade5133534",
+  "tipoff_2.mp3": "5d6070cdc1ec3f2a",
+  "tipoff_3.mp3": "ff9591a246945f3a",
+  "travel_1.mp3": "74113f968de43fea",
+  "travel_2.mp3": "4a4a6402ed4871b6",
+  "turnover_1.mp3": "29a1837a97e7d82e",
+  "turnover_2.mp3": "7a6e19c26a9aa749",
+  "whos_next_1.mp3": "c5d769c5e78a2f23",
+  "win_black_1.mp3": "5eb01c46575de995",
+  "win_blue_1.mp3": "e89cae8885ecd972",
+  "win_gray_1.mp3": "593e193e11d250f8",
+  "win_green_1.mp3": "cbc69148910f9f9d",
+  "win_navy_1.mp3": "ca8f274dae1d6cf3",
+  "win_orange_1.mp3": "b912901eb49400ab",
+  "win_purple_1.mp3": "2b05fe33f0b5d4b7",
+  "win_red_1.mp3": "69a4197822dc4313",
+  "win_white_1.mp3": "8bfbfd5dff394c77",
+  "win_yellow_1.mp3": "0bb5f42a9a2c7bf1"
+ },
+ "credit": "Announcer voice generated with ElevenLabs",
+ "lines": {
+  "airball": [
+   "airball_1.mp3",
+   "airball_2.mp3",
+   "airball_3.mp3"
+  ],
+  "and_one": [
+   "and_one_1.mp3"
+  ],
+  "ball_dont_lie": [
+   "ball_dont_lie_1.mp3"
+  ],
+  "block": [
+   "block_1.mp3",
+   "block_2.mp3",
+   "block_3.mp3",
+   "block_4.mp3"
+  ],
+  "brick": [
+   "brick_1.mp3",
+   "brick_2.mp3"
+  ],
+  "bucket": [
+   "bucket_1.mp3",
+   "bucket_2.mp3",
+   "bucket_3.mp3",
+   "bucket_4.mp3"
+  ],
+  "check_ball": [
+   "check_ball_1.mp3"
+  ],
+  "deep": [
+   "deep_1.mp3",
+   "deep_2.mp3"
+  ],
+  "defense": [
+   "defense_1.mp3"
+  ],
+  "foul": [
+   "foul_1.mp3",
+   "foul_2.mp3"
+  ],
+  "ft": [
+   "ft_1.mp3",
+   "ft_2.mp3"
+  ],
+  "gameover": [
+   "gameover_1.mp3",
+   "gameover_2.mp3",
+   "gameover_3.mp3"
+  ],
+  "gamepoint": [
+   "gamepoint_1.mp3",
+   "gamepoint_2.mp3"
+  ],
+  "gamepoint_black": [
+   "gamepoint_black_1.mp3"
+  ],
+  "gamepoint_blue": [
+   "gamepoint_blue_1.mp3"
+  ],
+  "gamepoint_gray": [
+   "gamepoint_gray_1.mp3"
+  ],
+  "gamepoint_green": [
+   "gamepoint_green_1.mp3"
+  ],
+  "gamepoint_navy": [
+   "gamepoint_navy_1.mp3"
+  ],
+  "gamepoint_orange": [
+   "gamepoint_orange_1.mp3"
+  ],
+  "gamepoint_purple": [
+   "gamepoint_purple_1.mp3"
+  ],
+  "gamepoint_red": [
+   "gamepoint_red_1.mp3"
+  ],
+  "gamepoint_white": [
+   "gamepoint_white_1.mp3"
+  ],
+  "gamepoint_yellow": [
+   "gamepoint_yellow_1.mp3"
+  ],
+  "hype": [
+   "hype_1.mp3",
+   "hype_2.mp3",
+   "hype_3.mp3"
+  ],
+  "ice_cold": [
+   "ice_cold_1.mp3"
+  ],
+  "next": [
+   "next_1.mp3"
+  ],
+  "run_it_back": [
+   "run_it_back_1.mp3"
+  ],
+  "steal": [
+   "steal_1.mp3",
+   "steal_2.mp3"
+  ],
+  "three": [
+   "three_1.mp3",
+   "three_2.mp3",
+   "three_3.mp3",
+   "three_4.mp3"
+  ],
+  "timeout": [
+   "timeout_1.mp3"
+  ],
+  "tipoff": [
+   "tipoff_1.mp3",
+   "tipoff_2.mp3",
+   "tipoff_3.mp3"
+  ],
+  "travel": [
+   "travel_1.mp3",
+   "travel_2.mp3"
+  ],
+  "turnover": [
+   "turnover_1.mp3",
+   "turnover_2.mp3"
+  ],
+  "whos_next": [
+   "whos_next_1.mp3"
+  ],
+  "win_black": [
+   "win_black_1.mp3"
+  ],
+  "win_blue": [
+   "win_blue_1.mp3"
+  ],
+  "win_gray": [
+   "win_gray_1.mp3"
+  ],
+  "win_green": [
+   "win_green_1.mp3"
+  ],
+  "win_navy": [
+   "win_navy_1.mp3"
+  ],
+  "win_orange": [
+   "win_orange_1.mp3"
+  ],
+  "win_purple": [
+   "win_purple_1.mp3"
+  ],
+  "win_red": [
+   "win_red_1.mp3"
+  ],
+  "win_white": [
+   "win_white_1.mp3"
+  ],
+  "win_yellow": [
+   "win_yellow_1.mp3"
+  ]
+ },
+ "model": "eleven_v3",
+ "players": {},
+ "roster": {},
+ "voiceId": "pNInz6obpgDQGcFmaJgB"
+}

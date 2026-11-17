@@ -20,6 +20,7 @@ import 'helpers.dart';
 class SilentSound extends SoundService {
   final played = <Sfx>[];
   final said = <String>[];
+  final calls = <Call>[];
   @override
   Future<void> init() async {}
   @override
@@ -28,6 +29,8 @@ class SilentSound extends SoundService {
   Future<void> play(Sfx s) async => played.add(s);
   @override
   Future<void> say(String text) async => said.add(text);
+  @override
+  Future<void> announce(Call call) async => calls.add(call);
 }
 
 Future<void> settle(WidgetTester tester, [int frames = 6]) async {
@@ -118,6 +121,8 @@ void main() {
     expect(events.single.type, EventType.outsideMade);
     expect(teamScores(events), [3, 0]);
     expect(sound.played, contains(Sfx.score3));
+    expect(sound.calls.last.keys, ['three']);
+    expect(sound.calls.last.player?.id, jay.id);
     expect(find.text('3'), findsWidgets);
 
     // Chris misses; rebound prompt -> Danny grabs it.

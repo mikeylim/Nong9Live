@@ -5,54 +5,54 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/app_store.dart';
+import '../../services/announcer.dart';
 import '../../services/sound_service.dart';
 import '../../theme/app_theme.dart';
 
 class _Pad {
-  const _Pad(this.emoji, this.label, this.sub, this.sfx, this.color, [this.lines = const []]);
+  const _Pad(this.emoji, this.label, this.sub, this.sfx, this.color, [this.voiceKey, this.fallback]);
   final String emoji;
   final String label;
   final String sub;
   final Sfx sfx;
   final Color color;
 
-  /// Announcer lines (one picked at random) when the voice is on.
-  final List<String> lines;
+  /// Recorded announcer clip key (see tool/generate_voice.py) and the text
+  /// the phone voice reads if that clip is missing.
+  final String? voiceKey;
+  final String? fallback;
 }
 
 const _pads = <_Pad>[
-  _Pad('🟨', 'FOUL', 'whistle', Sfx.whistle, Color(0xFFF59E0B), ['Foul!', 'That\'s a foul!']),
-  _Pad('🏀', '+1', 'free throw', Sfx.score1, Color(0xFF16A34A), ['Free throw is good!', 'And one!']),
-  _Pad('🔥', '+2', 'bucket', Sfx.score2, Color(0xFF16A34A), ['Bucket!', 'Count it!', 'Easy money!']),
-  _Pad('💥', '+3', 'bang!', Sfx.score3, Color(0xFFFF6B1A), ['Bang! From downtown!', 'Three pointer!', 'Splash!']),
-  _Pad('💨', 'AIRBALL', 'sad trombone', Sfx.airball, Color(0xFFEC4899), ['Air ball!', 'Air... ball!']),
-  _Pad('🧱', 'BRICK', 'clank', Sfx.brick, Color(0xFF78716C), ['Brick!', 'Clank!']),
-  _Pad('🚫', 'BLOCK', 'rejected', Sfx.block, Color(0xFF8B5CF6), [
-    'Rejected!',
-    'Get that outta here!',
-    'Not in my house!',
-  ]),
-  _Pad('🥷', 'STEAL', 'pickpocket', Sfx.steal, Color(0xFF6366F1), ['Stolen!', 'Picked his pocket!']),
-  _Pad('🚶', 'TRAVEL', 'double whistle', Sfx.whistleDouble, Color(0xFFD97706), ['Traveling!', 'That\'s a walk!']),
-  _Pad('⏱️', 'TIMEOUT', 'horn', Sfx.timeout, Color(0xFF3B82F6), ['Timeout!']),
+  _Pad('🟨', 'FOUL', 'whistle', Sfx.whistle, Color(0xFFF59E0B), 'foul', 'That\'s a foul!'),
+  _Pad('🏀', '+1', 'free throw', Sfx.score1, Color(0xFF16A34A), 'ft', 'Free throw is good!'),
+  _Pad('🔥', '+2', 'bucket', Sfx.score2, Color(0xFF16A34A), 'bucket', 'Bucket!'),
+  _Pad('💥', '+3', 'bang!', Sfx.score3, Color(0xFFFF6B1A), 'three', 'Bang! From downtown!'),
+  _Pad('💨', 'AIRBALL', 'sad trombone', Sfx.airball, Color(0xFFEC4899), 'airball', 'Air ball!'),
+  _Pad('🧱', 'BRICK', 'clank', Sfx.brick, Color(0xFF78716C), 'brick', 'Brick!'),
+  _Pad('🚫', 'BLOCK', 'rejected', Sfx.block, Color(0xFF8B5CF6), 'block', 'Rejected!'),
+  _Pad('🥷', 'STEAL', 'pickpocket', Sfx.steal, Color(0xFF6366F1), 'steal', 'Stolen!'),
+  _Pad('🚶', 'TRAVEL', 'double whistle', Sfx.whistleDouble, Color(0xFFD97706), 'travel', 'Traveling!'),
+  _Pad('⏱️', 'TIMEOUT', 'horn', Sfx.timeout, Color(0xFF3B82F6), 'timeout', 'Timeout!'),
   _Pad('🙌', 'CROWD', 'cheer', Sfx.crowd, Color(0xFF14B8A6)),
-  _Pad('📯', 'AIR HORN', 'hype', Sfx.airhorn, Color(0xFFEF4444)),
-  _Pad('🏁', 'TIP-OFF', 'let\'s go', Sfx.tipoff, Color(0xFF06B6D4), ['Let\'s go!', 'Ball is up!']),
+  _Pad('📯', 'AIR HORN', 'hype', Sfx.airhorn, Color(0xFFEF4444), 'hype', 'Oh my goodness!'),
+  _Pad('🏁', 'TIP-OFF', 'let\'s go', Sfx.tipoff, Color(0xFF06B6D4), 'tipoff', 'Let\'s go! Ball is up!'),
   _Pad('📣', 'WHISTLE', 'long', Sfx.whistleLong, Color(0xFFCA8A04)),
-  _Pad('🚨', 'GAME OVER', 'buzzer', Sfx.buzzer, Color(0xFFDC2626), ['That\'s the game!', 'Game over!']),
+  _Pad('🚨', 'GAME OVER', 'buzzer', Sfx.buzzer, Color(0xFFDC2626), 'gameover', 'That\'s the ballgame!'),
 ];
 
-const _phrases = [
-  'And one!',
-  'Ball don\'t lie!',
-  'Check ball!',
-  'Next!',
-  'Game point!',
-  'Run it back!',
-  'Who\'s got next?',
-  'Defense! Defense!',
-  'Ice cold!',
-  'He\'s on fire!',
+/// Quick phrases: label shown on the chip, recorded clip key.
+const _phrases = <(String, String)>[
+  ('And one!', 'and_one'),
+  ('Ball don\'t lie!', 'ball_dont_lie'),
+  ('Check ball!', 'check_ball'),
+  ('Next!', 'next'),
+  ('Game point!', 'gamepoint'),
+  ('Run it back!', 'run_it_back'),
+  ('Who\'s got next?', 'whos_next'),
+  ('Defense! Defense!', 'defense'),
+  ('Ice cold!', 'ice_cold'),
+  ('Hype!', 'hype'),
 ];
 
 class RefScreen extends StatefulWidget {
@@ -64,7 +64,6 @@ class RefScreen extends StatefulWidget {
 
 class _RefScreenState extends State<RefScreen> {
   final _say = TextEditingController();
-  int _phrase = 0;
 
   // Shot clock
   int _shotLength = 24;
@@ -95,9 +94,10 @@ class _RefScreenState extends State<RefScreen> {
     HapticFeedback.mediumImpact();
     _sound.play(pad.sfx);
     final store = context.read<AppStore>();
-    if (store.settings.announcer && pad.lines.isNotEmpty) {
-      final line = pad.lines[_phrase++ % pad.lines.length];
-      Future.delayed(const Duration(milliseconds: 600), () => _sound.say(line));
+    final key = pad.voiceKey;
+    if (store.settings.announcer && key != null) {
+      final call = Call([key], pad.fallback ?? '');
+      Future.delayed(Duration(milliseconds: pad.sfx == Sfx.airball ? 1900 : 450), () => _sound.announce(call));
     }
   }
 
@@ -233,7 +233,10 @@ class _RefScreenState extends State<RefScreen> {
           Wrap(
             spacing: 6,
             runSpacing: 6,
-            children: [for (final p in _phrases) ActionChip(label: Text(p), onPressed: () => _sound.say(p))],
+            children: [
+              for (final (label, key) in _phrases)
+                ActionChip(label: Text(label), onPressed: () => _sound.announce(Call([key], label))),
+            ],
           ),
         ],
       ),

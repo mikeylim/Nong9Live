@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+
+import 'announcer.dart';
+import 'voice_pack.dart';
 
 /// All synthesized sound effects (see tool/generate_sounds.py).
 enum Sfx {
@@ -35,7 +40,16 @@ class SoundService {
   final Map<Sfx, Future<AudioPlayer>> _players = {};
   FlutterTts? _tts;
 
+  /// Recorded announcer clips; empty until [init] loads the manifest.
+  VoicePack voice = VoicePack();
+  Future<AudioPlayer>? _voicePlayer;
+  final _rng = Random();
+
+  /// How often a player's own clip ("Jay for three!") beats the generic one.
+  static const personalCallChance = 0.65;
+
   Future<void> init() async {
+    voice = await VoicePack.load();
     try {
       // Mix with other audio, so a phone playing music at the court keeps going.
       await AudioPlayer.global.setAudioContext(
@@ -94,15 +108,48 @@ class SoundService {
     }
   }
 
+  /// Phone text-to-speech (used for "say anything" and calls with no clip).
   Future<void> say(String text) async {
     final tts = _tts;
     if (tts == null || text.trim().isEmpty) return;
     try {
+      await _stopVoice();
       await tts.stop();
       await tts.speak(text);
     } catch (e) {
       debugPrint('say: $e');
     }
+  }
+
+  /// Plays the recorded clip for [call], or reads its text if there is none.
+  Future<void> announce(Call call) async {
+    final personal = call.player != null &&
+        voice.hasPlayer(call.player!.name) &&
+        _rng.nextDouble() < personalCallChance;
+    final clip = voice.clipFor(call.keys, _rng, playerName: personal ? call.player!.name : null);
+    if (clip == null) return say(call.text);
+    try {
+      await _tts?.stop();
+      final p = await (_voicePlayer ??= _createVoicePlayer());
+      await p.stop();
+      await p.play(AssetSource(clip));
+    } catch (e) {
+      debugPrint('announce $clip: $e');
+      await say(call.text);
+    }
+  }
+
+  Future<AudioPlayer> _createVoicePlayer() async {
+    // One reusable player for the (longer) voice clips; effects use SoundPool.
+    final p = AudioPlayer(playerId: 'announcer');
+    p.onPlayerStateChanged.listen((_) {}, onError: (Object e) => debugPrint('announcer error: $e'));
+    await p.setReleaseMode(ReleaseMode.stop);
+    return p;
+  }
+
+  Future<void> _stopVoice() async {
+    final f = _voicePlayer;
+    if (f != null) await (await f).stop();
   }
 
   Future<void> stopAll() async {
@@ -112,6 +159,7 @@ class SoundService {
       } catch (_) {}
     }
     try {
+      await _stopVoice();
       await _tts?.stop();
     } catch (_) {}
   }
