@@ -4,6 +4,7 @@ import '../data/photo_store.dart';
 import '../models/game.dart';
 import '../models/player.dart';
 import '../theme/app_theme.dart';
+import 'avatar_painter.dart';
 
 class PlayerAvatar extends StatelessWidget {
   const PlayerAvatar({super.key, required this.player, this.size = 44, this.ring});
@@ -24,6 +25,8 @@ class PlayerAvatar extends StatelessWidget {
       inner = ClipOval(
         child: Image.file(photo, width: size, height: size, fit: BoxFit.cover, cacheWidth: (size * 3).round()),
       );
+    } else if (p?.avatar != null) {
+      inner = AvatarView(spec: p!.avatar!, size: size, background: color, number: p.jerseyNumber);
     } else {
       inner = Container(
         width: size,

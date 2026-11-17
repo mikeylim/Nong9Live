@@ -9,6 +9,7 @@ import '../../logic/format.dart';
 import '../../models/player.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/common.dart';
+import 'avatar_editor_screen.dart';
 
 class PlayerEditScreen extends StatefulWidget {
   const PlayerEditScreen({super.key, this.existing});
@@ -94,6 +95,24 @@ class _PlayerEditScreenState extends State<PlayerEditScreen> {
     }
   }
 
+  Future<void> _editAvatar() async {
+    final result = await Navigator.push<AvatarEditResult>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AvatarEditorScreen(
+          initial: _p.avatar,
+          background: _p.color,
+          number: int.tryParse(_number.text.trim()),
+        ),
+      ),
+    );
+    if (result == null || !mounted) return;
+    setState(() => _p.avatar = result.spec);
+    if (result.spec != null && _p.photoPath != null) {
+      toast(context, 'The photo shows first. Remove it (tap the picture) to use the avatar.');
+    }
+  }
+
   void _save() {
     final name = _name.text.trim();
     if (name.isEmpty) {
@@ -174,6 +193,23 @@ class _PlayerEditScreenState extends State<PlayerEditScreen> {
                 ],
               ),
             ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton.icon(
+                onPressed: _photo,
+                icon: const Icon(Icons.photo_camera_rounded, size: 20),
+                label: Text(_p.photoPath == null ? 'Photo' : 'Change photo'),
+              ),
+              const SizedBox(width: 10),
+              FilledButton.tonalIcon(
+                onPressed: _editAvatar,
+                icon: const Text('🧑🏽', style: TextStyle(fontSize: 18)),
+                label: Text(_p.avatar == null ? 'Create avatar' : 'Edit avatar'),
+              ),
+            ],
           ),
           const SizedBox(height: 14),
           Center(

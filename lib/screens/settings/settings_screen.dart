@@ -295,7 +295,7 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: 24),
           Center(
             child: Text(
-              'Nong9 Live · v1.1\nAnnouncer voice generated with ElevenLabs\n'
+              'Nong9 Live · v1.2\nAnnouncer voice generated with ElevenLabs\n'
               'Sound effects synthesized in-app · Barlow font (SIL OFL)',
               textAlign: TextAlign.center,
               style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12),

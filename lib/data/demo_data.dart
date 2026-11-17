@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../logic/scoring.dart';
 import '../logic/team_balancer.dart';
+import '../models/avatar.dart';
 import '../models/game.dart';
 import '../models/game_day.dart';
 import '../models/game_event.dart';
@@ -53,6 +54,7 @@ class DemoData {
         strengths: r.$9,
         weaknesses: r.$10,
         colorValue: avatarColors[i % avatarColors.length].toARGB32(),
+        avatar: i % 4 == 3 ? null : AvatarSpec.random(rng),
       );
       players.add(p);
       store.savePlayer(p);

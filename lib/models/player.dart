@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'avatar.dart';
+
 enum Position {
   guard('G', 'Guard'),
   forward('F', 'Forward'),
@@ -76,6 +78,7 @@ class Player {
     Map<Attribute, int>? ratings,
     this.bio,
     this.photoPath,
+    this.avatar,
     int? colorValue,
     this.archived = false,
     DateTime? createdAt,
@@ -101,6 +104,9 @@ class Player {
   Map<Attribute, int> ratings;
   String? bio;
   String? photoPath;
+
+  /// Custom cartoon avatar, shown when there's no photo.
+  AvatarSpec? avatar;
   int colorValue;
   bool archived;
   final DateTime createdAt;
@@ -160,6 +166,7 @@ class Player {
         'ratings': {for (final e in ratings.entries) e.key.name: e.value},
         'bio': bio,
         'photoPath': photoPath,
+        if (avatar != null) 'avatar': avatar!.toJson(),
         'colorValue': colorValue,
         'archived': archived,
         'createdAt': createdAt.toIso8601String(),
@@ -186,6 +193,7 @@ class Player {
       },
       bio: j['bio'] as String?,
       photoPath: j['photoPath'] as String?,
+      avatar: j['avatar'] is Map ? AvatarSpec.fromJson((j['avatar'] as Map).cast<String, dynamic>()) : null,
       colorValue: (j['colorValue'] as num?)?.toInt(),
       archived: j['archived'] as bool? ?? false,
       createdAt: DateTime.tryParse(j['createdAt'] as String? ?? ''),
